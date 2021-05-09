@@ -24,19 +24,16 @@ export const theStore: Store = makeEmptyStore();
 export const extendStore = (s: Store, val: Value): Store =>  {
     const boxes = unbox(s.vals);
     append(makeBox(val), boxes)
-    makeBox(boxes)
     setBox(s.vals, boxes)
     return s;
     }
     
 export const applyStore = (store: Store, address: number): Result<Value> =>
-makeOk(unbox(unbox(store.vals)[address]))
+    makeOk(unbox(unbox(store.vals)[address]))
 
     
-export const setStore = (store: Store, address: number, val: Value): void => {
-    const boxes = unbox(store.vals);
-    setBox(boxes[address], val)
-}
+export const setStore = (store: Store, address: number, val: Value): void => 
+    setBox(unbox(store.vals)[address], val)
     
 
 
