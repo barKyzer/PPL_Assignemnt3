@@ -1,6 +1,7 @@
-import { add, map, zipWith } from "ramda";
+import { add, map, zipWith, append } from "ramda";
 import { Value } from './L21-value-store';
 import { Result, makeFailure, makeOk, bind, either } from "../shared/result";
+import { SSL_OP_PKCS1_CHECK_1 } from "constants";
 
 // ========================================================
 // Box datatype
@@ -14,21 +15,29 @@ const setBox = <T>(b: Box<T>, v: T): void => { b[0] = v; return; }
 // Store datatype
 export interface Store {
     tag: "Store";
-    vals: Box<Value>[];
+    vals: Box<Box<Value>[]>;
 }
 
-export const isStore = ...;
-export const makeEmptyStore = ...;
-export const theStore: Store = 
-export const extendStore = (s: Store, val: Value): Store =>
-    // Complete
+export const isStore = (x: any): x is Store => x.tag === "Store";
+export const makeEmptyStore = (): Store => ({tag: "Store", vals: makeBox([])});
+export const theStore: Store = makeEmptyStore();
+export const extendStore = (s: Store, val: Value): Store =>  {
+    const boxes = unbox(s.vals);
+    append(makeBox(val), boxes)
+    makeBox(boxes)
+    setBox(s.vals, boxes)
+    return s;
+    }
     
 export const applyStore = (store: Store, address: number): Result<Value> =>
-    // Complete
+makeOk(unbox(unbox(store.vals)[address]))
 
     
-export const setStore = (store: Store, address: number, val: Value): void => 
-    // Complete
+export const setStore = (store: Store, address: number, val: Value): void => {
+    const boxes = unbox(store.vals);
+    setBox(boxes[address], val)
+}
+    
 
 
 // ========================================================
