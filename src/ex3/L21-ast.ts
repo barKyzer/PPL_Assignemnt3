@@ -65,7 +65,7 @@ export interface AppExp {tag: "AppExp"; rator: CExp; rands: CExp[]; }
 // L2
 export interface IfExp {tag: "IfExp"; test: CExp; then: CExp; alt: CExp; }
 export interface ProcExp {tag: "ProcExp"; args: VarDecl[], body: CExp[]; }
-export interface Binding {tag: "Binding"; var: VarRef; val: CExp; }
+export interface Binding {tag: "Binding"; var: VarDecl; val: CExp; }
 export interface LetExp {tag: "LetExp"; bindings: Binding[]; body: CExp[]; }
 // L2.1
 export interface SetExp {tag: "SetExp"; var: VarRef; newVal: CExp;}
@@ -108,7 +108,7 @@ export const makeIfExp = (test: CExp, then: CExp, alt: CExp): IfExp =>
 export const makeProcExp = (args: VarDecl[], body: CExp[]): ProcExp =>
     ({tag: "ProcExp", args: args, body: body});
 export const makeBinding = (v: string, val: CExp): Binding =>
-    ({tag: "Binding", var: makeVarRef(v), val: val});
+    ({tag: "Binding", var: makeVarDecl(v), val: val});
 export const makeLetExp = (bindings: Binding[], body: CExp[]): LetExp =>
     ({tag: "LetExp", bindings: bindings, body: body});
 // L2.1
