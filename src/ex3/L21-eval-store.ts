@@ -1,3 +1,5 @@
+// Bar 
+HTMLBodyElement;
 // L2-eval-box.ts
 // L2 with mutation (set!) and env-box model
 // Direct evaluation of letrec with mutation, define supports mutual recursion.
