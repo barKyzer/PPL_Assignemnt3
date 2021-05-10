@@ -22,9 +22,9 @@ export const isStore = (x: any): x is Store => x.tag === "Store";
 export const makeEmptyStore = (): Store => ({tag: "Store", vals: makeBox([])});
 export const theStore: Store = makeEmptyStore();
 export const extendStore = (s: Store, val: Value): Store =>  {
-    const boxes = unbox(s.vals);
-    append(makeBox(val), boxes)
-    setBox(s.vals, boxes)
+    const oldBoxes = unbox(s.vals);
+    const newBoxes = append(makeBox(val), oldBoxes)
+    setBox(s.vals, newBoxes)
     return s;
     }
     
